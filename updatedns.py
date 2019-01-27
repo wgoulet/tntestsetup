@@ -7,7 +7,7 @@ import datetime
 def main(argv):
     dnsname = ''
     ipaddress = ''
-    rightnow = datetime.datetime.today().strftime('%YA%mA%dA%HA%MA%S')
+    rightnow = datetime.datetime.today().strftime('%Ya%ma%da%Ha%Ma%S')
     try:
       opts, args = getopt.getopt(argv,"d:i:",["dnsName=","ipAddr="])
     except getopt.GetoptError:
@@ -16,7 +16,7 @@ def main(argv):
     
     for opt,arg in opts:
         if opt in ("-d","--dnsname"):
-            dnsname = '{}-{}'.format(rightnow,arg)
+            dnsname = '{}b{}'.format(rightnow,arg)
         elif opt in ("-i","--ipAddr"):
             ipaddress = arg
 

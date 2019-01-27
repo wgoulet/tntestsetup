@@ -21,12 +21,12 @@ def main(argv):
 
     templatefile = '/etc/nginx/sites-available/template'
     sitefile = '/etc/nginx/sites-available/{}'.format(dnsname)
-    defaultfile = '/etc/nginx/sites-available/default'
+    defaulttemplatefile = '/etc/nginx/sites-available/deftemplate'
     shutil.copyfile(templatefile,sitefile)
     templatewwwfile = '/var/www/html/template.html'
     sitewwwfile = '{}.html'.format(dnsname)
     shutil.copyfile(templatewwwfile,'/var/www/html/{}'.format(sitewwwfile))
-    with fileinput.input(files=(sitefile,'/var/www/html/{}'.format(sitewwwfile),defaultfile),inplace=True) as f:
+    with fileinput.input(files=(sitefile,'/var/www/html/{}'.format(sitewwwfile),defaulttemplatefile),inplace=True) as f:
         for line in f:
             if(line.count("REPLACEMENAME") > 0):
                 newline = line.replace("REPLACEMENAME",dnsname)
@@ -37,6 +37,7 @@ def main(argv):
             else:
                 print(line,end='')
 
+    shutil.copyfile(defaulttemplatefile,'/etc/nginx/sites-available/default')
 
     os.symlink(sitefile,'/etc/nginx/sites-enabled/{}'.format(dnsname))
 if __name__ == "__main__":
